@@ -13,6 +13,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<PriceDatabase> PriceDatabases { get; set; }
     public DbSet<PriceItem> PriceItems { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
+    public DbSet<Workbook> Workbooks { get; set; }
+    public DbSet<WorkbookItem> WorkbookItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,5 +27,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>()
             .Property(u => u.Role)
             .HasConversion<string>();
+
+        modelBuilder.Entity<PriceDatabase>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

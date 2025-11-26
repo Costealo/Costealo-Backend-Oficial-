@@ -50,8 +50,8 @@ public class Subscription
     public int MaxDatabases => PlanType switch
     {
         SubscriptionPlan.Free => 1,
-        SubscriptionPlan.Basico => 1,
-        SubscriptionPlan.Estandar => 2,
+        SubscriptionPlan.Basico => 2,
+        SubscriptionPlan.Estandar => 3,
         SubscriptionPlan.Premium => int.MaxValue,
         _ => 1
     };
