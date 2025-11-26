@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Costealo.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3d74c18c8a836977ea66c9af09e452452f79088")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52f38dc88df750ded15207c5ff2f47c0963e4e95")]
 [assembly: System.Reflection.AssemblyProductAttribute("Costealo.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Costealo.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

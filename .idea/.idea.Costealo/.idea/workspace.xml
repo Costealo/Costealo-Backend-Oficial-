@@ -8,7 +8,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="305f0e36-b736-486f-b332-0fdfc5a54eba" name="Changes" comment="Cambios en el user, se agrego nombre y gmail" />
+    <list default="true" id="305f0e36-b736-486f-b332-0fdfc5a54eba" name="Changes" comment="Cambios en el user, se agrego nombre y gmail">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Costealo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Costealo/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/Controllers/PriceDatabaseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/Controllers/PriceDatabaseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/Services/ExcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/Services/ExcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/Services/IExcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/Services/IExcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/Costealo.API.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/bin/Debug/net9.0/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Costealo.API.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/Costealo.API.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/ref/Costealo.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/ref/Costealo.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/refint/Costealo.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/refint/Costealo.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/Debug/net9.0/rpswa.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Costealo.API/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Costealo.API/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,27 +55,32 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "nadiammartinez"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;nadiammartinez&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Costealo/Costealo-Backend-Oficial-.git",
-    "accountId": "ee9fc90e-426d-44f7-9fc4-b1ae4c18bd78"
+    "accountId": "c64ffd70-ba05-42d9-a9d8-43bc403c51a2"
   }
 }]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/obj/Debug/net9.0/Costealo.API.AssemblyInfo.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="35zqy44jT12tISuwWVjSL99TFUm" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -49,9 +91,11 @@
     ".NET Launch Settings Profile.Costealo.API: http.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "nadia/estructura",
+    "git-widget-placeholder": "mariana",
+    "last_opened_file_path": "C:/Users/pitu0/RiderProjects/Costealo-Backend-Oficial-",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,7 +116,6 @@
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <option name="AUTO_ATTACH_CHILDREN" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -88,7 +131,6 @@
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <option name="AUTO_ATTACH_CHILDREN" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -102,6 +144,7 @@
       <option name="presentableId" value="Default" />
       <updated>1764123499510</updated>
       <workItem from="1764123501963" duration="1664000" />
+      <workItem from="1764130145653" duration="3468000" />
     </task>
     <servers />
   </component>

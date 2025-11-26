@@ -35,6 +35,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
 
+// Configure HttpClient for RapidAPI Unit Conversion
+builder.Services.AddHttpClient<IUnitConversionService, UnitConversionService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(10); // Set reasonable timeout
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddScoped<IUnitConversionService, UnitConversionService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

@@ -100,7 +100,7 @@ public class PriceDatabaseController : ControllerBase
     // --- Import & Upload ---
 
     [HttpPost("upload")]
-    public async Task<ActionResult<PriceDatabase>> UploadDatabase(IFormFile file, [FromForm] string databaseName)
+    public async Task<ActionResult> UploadDatabase(IFormFile file, [FromForm] string databaseName)
     {
         if (file == null || file.Length == 0)
             return BadRequest("Please upload a valid Excel file.");
@@ -109,21 +109,41 @@ public class PriceDatabaseController : ControllerBase
 
         try
         {
-            var items = _excelService.ParsePriceItems(file);
-            if (items.Count == 0) return BadRequest("No valid items found.");
+            // Parse and validate
+            var validationResult = _excelService.ParseAndValidate(file);
+            
+            // If validation failed, return detailed error report
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = $"La importación fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s)",
+                    totalRows = validationResult.TotalRows,
+                    errorsFound = validationResult.ErrorCount,
+                    errors = validationResult.Errors
+                });
+            }
 
+            // Validation passed, save to database
             var priceDatabase = new PriceDatabase
             {
                 Name = databaseName,
                 UploadDate = DateTime.UtcNow,
-                ItemCount = items.Count,
-                Items = items
+                ItemCount = validationResult.ValidItems.Count,
+                Items = validationResult.ValidItems
             };
 
             _context.PriceDatabases.Add(priceDatabase);
             await _context.SaveChangesAsync();
 
-            return Ok(priceDatabase);
+            return Ok(new
+            {
+                success = true,
+                message = "Base de datos importada exitosamente",
+                totalRows = validationResult.TotalRows,
+                database = priceDatabase
+            });
         }
         catch (Exception ex)
         {
@@ -132,7 +152,7 @@ public class PriceDatabaseController : ControllerBase
     }
 
     [HttpPost("import-url")]
-    public async Task<ActionResult<PriceDatabase>> ImportFromUrl([FromBody] ImportUrlDto request)
+    public async Task<ActionResult> ImportFromUrl([FromBody] ImportUrlDto request)
     {
         if (string.IsNullOrWhiteSpace(request.Url) || string.IsNullOrWhiteSpace(request.Name))
             return BadRequest("URL and Name are required.");
@@ -140,23 +160,43 @@ public class PriceDatabaseController : ControllerBase
         try
         {
             var stream = await _httpClient.GetStreamAsync(request.Url);
-            var items = _excelService.ParsePriceItems(stream);
+            
+            // Parse and validate
+            var validationResult = _excelService.ParseAndValidate(stream);
+            
+            // If validation failed, return detailed error report
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = $"La importación fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s)",
+                    totalRows = validationResult.TotalRows,
+                    errorsFound = validationResult.ErrorCount,
+                    errors = validationResult.Errors
+                });
+            }
 
-            if (items.Count == 0) return BadRequest("No valid items found in the file from URL.");
-
+            // Validation passed, save to database
             var priceDatabase = new PriceDatabase
             {
                 Name = request.Name,
                 SourceUrl = request.Url,
                 UploadDate = DateTime.UtcNow,
-                ItemCount = items.Count,
-                Items = items
+                ItemCount = validationResult.ValidItems.Count,
+                Items = validationResult.ValidItems
             };
 
             _context.PriceDatabases.Add(priceDatabase);
             await _context.SaveChangesAsync();
 
-            return Ok(priceDatabase);
+            return Ok(new
+            {
+                success = true,
+                message = "Base de datos importada exitosamente",
+                totalRows = validationResult.TotalRows,
+                database = priceDatabase
+            });
         }
         catch (Exception ex)
         {
@@ -174,21 +214,41 @@ public class PriceDatabaseController : ControllerBase
         try
         {
             var stream = await _httpClient.GetStreamAsync(database.SourceUrl);
-            var newItems = _excelService.ParsePriceItems(stream);
+            
+            // Parse and validate
+            var validationResult = _excelService.ParseAndValidate(stream);
+            
+            // If validation failed, return detailed error report (keep old data)
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = $"La actualización fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s). Los datos existentes se mantuvieron sin cambios.",
+                    totalRows = validationResult.TotalRows,
+                    errorsFound = validationResult.ErrorCount,
+                    errors = validationResult.Errors
+                });
+            }
 
-            if (newItems.Count == 0) return BadRequest("No valid items found in the refreshed file.");
-
+            // Validation passed, update database
             // Remove old items
             _context.PriceItems.RemoveRange(database.Items);
 
             // Add new items
-            database.Items = newItems;
-            database.ItemCount = newItems.Count;
+            database.Items = validationResult.ValidItems;
+            database.ItemCount = validationResult.ValidItems.Count;
             database.UploadDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 
-            return Ok(database);
+            return Ok(new
+            {
+                success = true,
+                message = "Base de datos actualizada exitosamente",
+                totalRows = validationResult.TotalRows,
+                database
+            });
         }
         catch (Exception ex)
         {
@@ -211,6 +271,28 @@ public class PriceDatabaseController : ControllerBase
         
         if (!PriceDatabaseExists(id)) return NotFound("Database not found.");
 
+        // Validate product name
+        if (string.IsNullOrWhiteSpace(item.Product))
+            return BadRequest("Product name is required and cannot be empty.");
+
+        // Validate price
+        if (item.Price <= 0)
+            return BadRequest("Price must be greater than zero.");
+
+        // Validate unit
+        if (!UnitCatalog.IsValidUnit(item.Unit))
+            return BadRequest($"Invalid unit '{item.Unit}'. Please use a valid unit from the catalog.");
+
+        // Validate ExternalId uniqueness within the database
+        if (!string.IsNullOrWhiteSpace(item.ExternalId))
+        {
+            var duplicateExists = await _context.PriceItems
+                .AnyAsync(i => i.PriceDatabaseId == id && i.ExternalId == item.ExternalId);
+            
+            if (duplicateExists)
+                return BadRequest($"An item with ExternalId '{item.ExternalId}' already exists in this database.");
+        }
+
         _context.PriceItems.Add(item);
         
         // Update item count
@@ -226,6 +308,28 @@ public class PriceDatabaseController : ControllerBase
     public async Task<IActionResult> UpdateItem(int id, int itemId, PriceItem item)
     {
         if (id != item.PriceDatabaseId || itemId != item.Id) return BadRequest();
+
+        // Validate product name
+        if (string.IsNullOrWhiteSpace(item.Product))
+            return BadRequest("Product name is required and cannot be empty.");
+
+        // Validate price
+        if (item.Price <= 0)
+            return BadRequest("Price must be greater than zero.");
+
+        // Validate unit
+        if (!UnitCatalog.IsValidUnit(item.Unit))
+            return BadRequest($"Invalid unit '{item.Unit}'. Please use a valid unit from the catalog.");
+
+        // Validate ExternalId uniqueness within the database (excluding current item)
+        if (!string.IsNullOrWhiteSpace(item.ExternalId))
+        {
+            var duplicateExists = await _context.PriceItems
+                .AnyAsync(i => i.PriceDatabaseId == id && i.ExternalId == item.ExternalId && i.Id != itemId);
+            
+            if (duplicateExists)
+                return BadRequest($"An item with ExternalId '{item.ExternalId}' already exists in this database.");
+        }
 
         _context.Entry(item).State = EntityState.Modified;
 
