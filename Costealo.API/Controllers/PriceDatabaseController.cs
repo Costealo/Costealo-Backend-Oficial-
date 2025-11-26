@@ -128,7 +128,8 @@ public class PriceDatabaseController : ControllerBase
                 Name = databaseName,
                 UploadDate = DateTime.UtcNow,
                 ItemCount = items.Count,
-                Items = items
+                Items = items,
+                UserId = userId
             };
 
             _context.PriceDatabases.Add(priceDatabase);
@@ -169,7 +170,8 @@ public class PriceDatabaseController : ControllerBase
                 SourceUrl = request.Url,
                 UploadDate = DateTime.UtcNow,
                 ItemCount = items.Count,
-                Items = items
+                Items = items,
+                UserId = userId
             };
 
             _context.PriceDatabases.Add(priceDatabase);
