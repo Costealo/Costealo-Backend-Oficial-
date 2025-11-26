@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pitu0\\RiderProjects\\Costealo-Backend-Oficial-\\Costealo.API\\Costealo.API.csproj": {}
+    "/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/Costealo.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pitu0\\RiderProjects\\Costealo-Backend-Oficial-\\Costealo.API\\Costealo.API.csproj": {
+    "/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/Costealo.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pitu0\\RiderProjects\\Costealo-Backend-Oficial-\\Costealo.API\\Costealo.API.csproj",
+        "projectUniqueName": "/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/Costealo.API.csproj",
         "projectName": "Costealo.API",
-        "projectPath": "C:\\Users\\pitu0\\RiderProjects\\Costealo-Backend-Oficial-\\Costealo.API\\Costealo.API.csproj",
-        "packagesPath": "C:\\Users\\pitu0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pitu0\\RiderProjects\\Costealo-Backend-Oficial-\\Costealo.API\\obj\\",
+        "projectPath": "/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/Costealo.API.csproj",
+        "packagesPath": "/Users/nadiamartinezrocha/.nuget/packages/",
+        "outputPath": "/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\pitu0\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/nadiamartinezrocha/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -101,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
