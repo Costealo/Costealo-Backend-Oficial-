@@ -8,7 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="305f0e36-b736-486f-b332-0fdfc5a54eba" name="Changes" comment="Cambios en el user, se agrego nombre y gmail" />
+    <list default="true" id="305f0e36-b736-486f-b332-0fdfc5a54eba" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +57,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "nadia/admin",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/pitu0/RiderProjects/Costealo-Backend-Oficial-",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
