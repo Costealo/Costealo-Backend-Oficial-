@@ -4,6 +4,7 @@ using Costealo.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Costealo.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251126074107_AddWorkbooks")]
+    partial class AddWorkbooks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,18 +44,10 @@ namespace Costealo.API.Migrations
                     b.Property<string>("SourceUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("PriceDatabases");
                 });
@@ -200,9 +195,6 @@ namespace Costealo.API.Migrations
                     b.Property<decimal>("ProfitMarginPercentage")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<decimal?>("TargetSalePrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -251,17 +243,6 @@ namespace Costealo.API.Migrations
                     b.HasIndex("WorkbookId");
 
                     b.ToTable("WorkbookItems");
-                });
-
-            modelBuilder.Entity("Costealo.API.Models.PriceDatabase", b =>
-                {
-                    b.HasOne("Costealo.API.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Costealo.API.Models.PriceItem", b =>

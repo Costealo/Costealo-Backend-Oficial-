@@ -1,15 +1,8 @@
 using Costealo.API.Data;
 using Costealo.API.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Costealo.API.Services;
-
-public interface ISubscriptionService
-{
-    Task<bool> CanCreateDatabase(int userId);
-    Task<Subscription> GetUserSubscription(int userId);
-}
 
 public class SubscriptionService : ISubscriptionService
 {
@@ -25,33 +18,38 @@ public class SubscriptionService : ISubscriptionService
         var subscription = await _context.Subscriptions
             .FirstOrDefaultAsync(s => s.UserId == userId && s.IsActive);
 
-        // Return default Free plan if no subscription exists
         if (subscription == null)
         {
-            return new Subscription
+            // Create default Free subscription if none exists
+            subscription = new Subscription
             {
                 UserId = userId,
                 PlanType = SubscriptionPlan.Free,
-                IsActive = true,
-                StartDate = DateTime.UtcNow
+                StartDate = DateTime.UtcNow,
+                IsActive = true
             };
+            _context.Subscriptions.Add(subscription);
+            await _context.SaveChangesAsync();
         }
 
         return subscription;
     }
 
+    public async Task<bool> CanCreateWorkbook(int userId)
+    {
+        var subscription = await GetUserSubscription(userId);
+        if (subscription.PlanType == SubscriptionPlan.Premium) return true;
+
+        var count = await _context.Workbooks.CountAsync(w => w.UserId == userId);
+        return count < subscription.MaxWorkbooks;
+    }
+
     public async Task<bool> CanCreateDatabase(int userId)
     {
         var subscription = await GetUserSubscription(userId);
-        
-        // Count user's existing databases
-        var currentDatabaseCount = await _context.PriceDatabases
-            .CountAsync(db => db.Items.Any(item => item.PriceDatabase.Items.Any()));
-        
-        // For simplicity, we're checking total databases
-        // In a real app, you might want to track per-user database ownership
-        var userDatabaseCount = currentDatabaseCount; // Simplified for now
-        
-        return userDatabaseCount < subscription.MaxDatabases;
+        if (subscription.PlanType == SubscriptionPlan.Premium) return true;
+
+        var count = await _context.PriceDatabases.CountAsync(d => d.UserId == userId);
+        return count < subscription.MaxDatabases;
     }
 }
