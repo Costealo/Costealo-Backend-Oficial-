@@ -22,7 +22,7 @@ public class AuthService : IAuthService
 
     public async Task<User?> RegisterAsync(User user, string password)
     {
-        if (await _context.Users.AnyAsync(u => u.Username == user.Username))
+        if (await _context.Users.AnyAsync(u => u.Email == user.Email))
         {
             return null; // User already exists
         }
@@ -36,9 +36,9 @@ public class AuthService : IAuthService
         return user;
     }
 
-    public async Task<string?> LoginAsync(string username, string password)
+    public async Task<string?> LoginAsync(string email, string password)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         if (user == null || !VerifyPasswordHash(password, user.PasswordHash))
         {
             return null;
@@ -78,7 +78,7 @@ public class AuthService : IAuthService
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Name, user.Email),
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 

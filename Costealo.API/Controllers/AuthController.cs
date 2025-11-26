@@ -20,7 +20,8 @@ public class AuthController : ControllerBase
     {
         var user = new User
         {
-            Username = request.Username,
+            Name = request.Name,
+            Email = request.Email,
             Role = request.Role
         };
 
@@ -36,10 +37,10 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(UserLoginDto request)
     {
-        var token = await _authService.LoginAsync(request.Username, request.Password);
+        var token = await _authService.LoginAsync(request.Email, request.Password);
         if (token == null)
         {
-            return BadRequest("Invalid username or password.");
+            return BadRequest("Invalid email or password.");
         }
 
         return Ok(token);
@@ -48,13 +49,14 @@ public class AuthController : ControllerBase
 
 public class UserDto
 {
-    public string Username { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public UserRole Role { get; set; }
 }
 
 public class UserLoginDto
 {
-    public string Username { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }

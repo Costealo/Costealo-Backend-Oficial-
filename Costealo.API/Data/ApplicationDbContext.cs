@@ -16,7 +16,7 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<User>()
-            .HasIndex(u => u.Username)
+            .HasIndex(u => u.Email)
             .IsUnique();
             
         modelBuilder.Entity<User>()
