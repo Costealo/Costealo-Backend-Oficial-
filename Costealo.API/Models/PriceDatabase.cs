@@ -11,6 +11,8 @@ public class PriceDatabase
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
+    public string? SourceUrl { get; set; }
+
     public DateTime UploadDate { get; set; } = DateTime.UtcNow;
 
     public int ItemCount { get; set; }
