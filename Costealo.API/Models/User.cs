@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+giusing System.ComponentModel.DataAnnotations;
 
 namespace Costealo.API.Models;
 
