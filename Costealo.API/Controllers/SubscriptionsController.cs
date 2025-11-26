@@ -63,7 +63,11 @@ public class SubscriptionsController : ControllerBase
             UserId = userId,
             PlanType = request.PlanType,
             StartDate = DateTime.UtcNow,
-            IsActive = true
+            IsActive = true,
+            CardLastFourDigits = request.CardLastFourDigits,
+            CardHolderName = request.CardHolderName,
+            ExpirationDate = request.ExpirationDate,
+            PaymentMethodType = request.PaymentMethodType
         };
 
         _context.Subscriptions.Add(subscription);
@@ -92,6 +96,16 @@ public class SubscriptionsController : ControllerBase
         {
             subscription.EndDate = request.EndDate.Value;
         }
+
+        // Update payment info if provided
+        if (!string.IsNullOrWhiteSpace(request.CardLastFourDigits))
+            subscription.CardLastFourDigits = request.CardLastFourDigits;
+        if (!string.IsNullOrWhiteSpace(request.CardHolderName))
+            subscription.CardHolderName = request.CardHolderName;
+        if (!string.IsNullOrWhiteSpace(request.ExpirationDate))
+            subscription.ExpirationDate = request.ExpirationDate;
+        if (!string.IsNullOrWhiteSpace(request.PaymentMethodType))
+            subscription.PaymentMethodType = request.PaymentMethodType;
 
         _context.Entry(subscription).State = EntityState.Modified;
 
@@ -145,6 +159,10 @@ public class SubscriptionsController : ControllerBase
 public class CreateSubscriptionDto
 {
     public SubscriptionPlan PlanType { get; set; }
+    public string? CardLastFourDigits { get; set; }
+    public string? CardHolderName { get; set; }
+    public string? ExpirationDate { get; set; }
+    public string? PaymentMethodType { get; set; }
 }
 
 public class UpdateSubscriptionDto
@@ -152,4 +170,8 @@ public class UpdateSubscriptionDto
     public SubscriptionPlan PlanType { get; set; }
     public bool IsActive { get; set; }
     public DateTime? EndDate { get; set; }
+    public string? CardLastFourDigits { get; set; }
+    public string? CardHolderName { get; set; }
+    public string? ExpirationDate { get; set; }
+    public string? PaymentMethodType { get; set; }
 }

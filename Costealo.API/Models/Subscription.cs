@@ -22,6 +22,19 @@ public class Subscription
 
     public bool IsActive { get; set; } = true;
 
+    // Payment information (for demo purposes only - not validated)
+    [MaxLength(4)]
+    public string? CardLastFourDigits { get; set; }
+
+    [MaxLength(100)]
+    public string? CardHolderName { get; set; }
+
+    [MaxLength(7)] // Format: MM/YYYY
+    public string? ExpirationDate { get; set; }
+
+    [MaxLength(50)]
+    public string? PaymentMethodType { get; set; } // "Tarjeta de débito" or "Tarjeta de crédito"
+
     // Calculated properties based on plan
     [NotMapped]
     public int MaxWorkbooks => PlanType switch
