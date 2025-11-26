@@ -159,3 +159,17 @@
 /Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/obj/Debug/net9.0/Costealo.API.pdb
 /Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/obj/Debug/net9.0/Costealo.API.genruntimeconfig.cache
 /Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/obj/Debug/net9.0/ref/Costealo.API.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/BouncyCastle.Cryptography.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/Enums.NET.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/ExtendedNumerics.BigDecimal.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/MathNet.Numerics.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/Microsoft.IO.RecyclableMemoryStream.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/NPOI.Core.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/NPOI.OOXML.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/NPOI.OpenXml4Net.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/NPOI.OpenXmlFormats.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/NSax.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/ICSharpCode.SharpZipLib.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/SixLabors.Fonts.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/SixLabors.ImageSharp.dll
+/Users/nadiamartinezrocha/RiderProjects/Costealo-Backend-Oficial-/Costealo.API/bin/Debug/net9.0/ZString.dll
