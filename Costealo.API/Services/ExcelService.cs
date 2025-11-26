@@ -77,4 +77,132 @@ public class ExcelService : IExcelService
         }
         return 0;
     }
+
+    public ImportValidationResult ParseAndValidate(IFormFile file)
+    {
+        using (var stream = file.OpenReadStream())
+        {
+            return ParseAndValidate(stream);
+        }
+    }
+
+    public ImportValidationResult ParseAndValidate(Stream stream)
+    {
+        var result = new ImportValidationResult();
+        var errors = new List<ImportValidationError>();
+        var validItems = new List<PriceItem>();
+        var externalIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var externalIdRows = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        // Ensure stream is at the beginning
+        if (stream.CanSeek && stream.Position != 0)
+        {
+            stream.Position = 0;
+        }
+
+        IWorkbook workbook = new XSSFWorkbook(stream);
+        ISheet sheet = workbook.GetSheetAt(0);
+
+        // Start from row 1 (assuming row 0 is header)
+        for (int i = 1; i <= sheet.LastRowNum; i++)
+        {
+            IRow row = sheet.GetRow(i);
+            if (row == null) continue;
+
+            int excelRowNumber = i + 1; // +1 because Excel is 1-indexed and we skip header
+
+            // Parse values
+            string externalId = GetCellValue(row.GetCell(0));
+            string product = GetCellValue(row.GetCell(1));
+            string priceStr = GetCellValue(row.GetCell(2));
+            string unit = GetCellValue(row.GetCell(3));
+
+            bool hasErrors = false;
+
+            // Validate Product
+            if (string.IsNullOrWhiteSpace(product))
+            {
+                errors.Add(new ImportValidationError(
+                    excelRowNumber,
+                    "Producto",
+                    product,
+                    "El nombre del producto es requerido"
+                ));
+                hasErrors = true;
+            }
+
+            // Validate Price
+            if (!decimal.TryParse(priceStr, out var price))
+            {
+                errors.Add(new ImportValidationError(
+                    excelRowNumber,
+                    "Precio",
+                    priceStr,
+                    "El precio debe ser un número válido"
+                ));
+                hasErrors = true;
+            }
+            else if (price <= 0)
+            {
+                errors.Add(new ImportValidationError(
+                    excelRowNumber,
+                    "Precio",
+                    priceStr,
+                    "El precio debe ser mayor a cero"
+                ));
+                hasErrors = true;
+            }
+
+            // Validate Unit
+            if (!UnitCatalog.IsValidUnit(unit))
+            {
+                errors.Add(new ImportValidationError(
+                    excelRowNumber,
+                    "Unidad",
+                    unit,
+                    "Unidad inválida. Use una unidad del catálogo (ej: kilogram, gram, liter)"
+                ));
+                hasErrors = true;
+            }
+
+            // Validate ExternalId uniqueness
+            if (!string.IsNullOrWhiteSpace(externalId))
+            {
+                if (externalIds.Contains(externalId))
+                {
+                    errors.Add(new ImportValidationError(
+                        excelRowNumber,
+                        "ID",
+                        externalId,
+                        $"El ID '{externalId}' está duplicado en la fila {externalIdRows[externalId]}"
+                    ));
+                    hasErrors = true;
+                }
+                else
+                {
+                    externalIds.Add(externalId);
+                    externalIdRows[externalId] = excelRowNumber;
+                }
+            }
+
+            // Only add to valid items if no errors
+            if (!hasErrors)
+            {
+                validItems.Add(new PriceItem
+                {
+                    ExternalId = externalId,
+                    Product = product,
+                    Price = price,
+                    Unit = unit
+                });
+            }
+        }
+
+        result.TotalRows = sheet.LastRowNum; // Excluding header
+        result.Errors = errors;
+        result.ValidItems = validItems;
+        result.IsValid = errors.Count == 0 && validItems.Count > 0;
+
+        return result;
+    }
 }
