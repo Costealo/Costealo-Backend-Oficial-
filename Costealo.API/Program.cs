@@ -34,6 +34,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
 // Configure HttpClient for RapidAPI Unit Conversion
 builder.Services.AddHttpClient<IUnitConversionService, UnitConversionService>(client =>

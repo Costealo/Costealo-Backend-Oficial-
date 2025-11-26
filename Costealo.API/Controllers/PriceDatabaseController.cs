@@ -4,6 +4,7 @@ using Costealo.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Costealo.API.Controllers;
 
@@ -14,12 +15,14 @@ public class PriceDatabaseController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly IExcelService _excelService;
+    private readonly ISubscriptionService _subscriptionService;
     private readonly HttpClient _httpClient;
 
-    public PriceDatabaseController(ApplicationDbContext context, IExcelService excelService)
+    public PriceDatabaseController(ApplicationDbContext context, IExcelService excelService, ISubscriptionService subscriptionService)
     {
         _context = context;
         _excelService = excelService;
+        _subscriptionService = subscriptionService;
         _httpClient = new HttpClient();
     }
 
@@ -100,50 +103,38 @@ public class PriceDatabaseController : ControllerBase
     // --- Import & Upload ---
 
     [HttpPost("upload")]
-    public async Task<ActionResult> UploadDatabase(IFormFile file, [FromForm] string databaseName)
+    public async Task<ActionResult<PriceDatabase>> UploadDatabase(IFormFile file, [FromForm] string databaseName)
     {
         if (file == null || file.Length == 0)
             return BadRequest("Please upload a valid Excel file.");
         if (string.IsNullOrWhiteSpace(databaseName))
             return BadRequest("Database name is required.");
 
+        // Check subscription limits
+        var userId = int.Parse(User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier)!);
+        if (!await _subscriptionService.CanCreateDatabase(userId))
+        {
+            var subscription = await _subscriptionService.GetUserSubscription(userId);
+            return BadRequest($"Database limit reached for your {subscription.PlanType} plan. Upgrade to create more databases.");
+        }
+
         try
         {
-            // Parse and validate
-            var validationResult = _excelService.ParseAndValidate(file);
-            
-            // If validation failed, return detailed error report
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = $"La importación fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s)",
-                    totalRows = validationResult.TotalRows,
-                    errorsFound = validationResult.ErrorCount,
-                    errors = validationResult.Errors
-                });
-            }
+            var items = _excelService.ParsePriceItems(file);
+            if (items.Count == 0) return BadRequest("No valid items found.");
 
-            // Validation passed, save to database
             var priceDatabase = new PriceDatabase
             {
                 Name = databaseName,
                 UploadDate = DateTime.UtcNow,
-                ItemCount = validationResult.ValidItems.Count,
-                Items = validationResult.ValidItems
+                ItemCount = items.Count,
+                Items = items
             };
 
             _context.PriceDatabases.Add(priceDatabase);
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                success = true,
-                message = "Base de datos importada exitosamente",
-                totalRows = validationResult.TotalRows,
-                database = priceDatabase
-            });
+            return Ok(priceDatabase);
         }
         catch (Exception ex)
         {
@@ -152,51 +143,39 @@ public class PriceDatabaseController : ControllerBase
     }
 
     [HttpPost("import-url")]
-    public async Task<ActionResult> ImportFromUrl([FromBody] ImportUrlDto request)
+    public async Task<ActionResult<PriceDatabase>> ImportFromUrl([FromBody] ImportUrlDto request)
     {
         if (string.IsNullOrWhiteSpace(request.Url) || string.IsNullOrWhiteSpace(request.Name))
             return BadRequest("URL and Name are required.");
 
+        // Check subscription limits
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        if (!await _subscriptionService.CanCreateDatabase(userId))
+        {
+            var subscription = await _subscriptionService.GetUserSubscription(userId);
+            return BadRequest($"Database limit reached for your {subscription.PlanType} plan. Upgrade to create more databases.");
+        }
+
         try
         {
             var stream = await _httpClient.GetStreamAsync(request.Url);
-            
-            // Parse and validate
-            var validationResult = _excelService.ParseAndValidate(stream);
-            
-            // If validation failed, return detailed error report
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = $"La importación fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s)",
-                    totalRows = validationResult.TotalRows,
-                    errorsFound = validationResult.ErrorCount,
-                    errors = validationResult.Errors
-                });
-            }
+            var items = _excelService.ParsePriceItems(stream);
 
-            // Validation passed, save to database
+            if (items.Count == 0) return BadRequest("No valid items found in the file from URL.");
+
             var priceDatabase = new PriceDatabase
             {
                 Name = request.Name,
                 SourceUrl = request.Url,
                 UploadDate = DateTime.UtcNow,
-                ItemCount = validationResult.ValidItems.Count,
-                Items = validationResult.ValidItems
+                ItemCount = items.Count,
+                Items = items
             };
 
             _context.PriceDatabases.Add(priceDatabase);
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                success = true,
-                message = "Base de datos importada exitosamente",
-                totalRows = validationResult.TotalRows,
-                database = priceDatabase
-            });
+            return Ok(priceDatabase);
         }
         catch (Exception ex)
         {
@@ -214,41 +193,21 @@ public class PriceDatabaseController : ControllerBase
         try
         {
             var stream = await _httpClient.GetStreamAsync(database.SourceUrl);
-            
-            // Parse and validate
-            var validationResult = _excelService.ParseAndValidate(stream);
-            
-            // If validation failed, return detailed error report (keep old data)
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = $"La actualización fue rechazada debido a {validationResult.ErrorCount} error(es) encontrado(s). Los datos existentes se mantuvieron sin cambios.",
-                    totalRows = validationResult.TotalRows,
-                    errorsFound = validationResult.ErrorCount,
-                    errors = validationResult.Errors
-                });
-            }
+            var newItems = _excelService.ParsePriceItems(stream);
 
-            // Validation passed, update database
+            if (newItems.Count == 0) return BadRequest("No valid items found in the refreshed file.");
+
             // Remove old items
             _context.PriceItems.RemoveRange(database.Items);
 
             // Add new items
-            database.Items = validationResult.ValidItems;
-            database.ItemCount = validationResult.ValidItems.Count;
+            database.Items = newItems;
+            database.ItemCount = newItems.Count;
             database.UploadDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                success = true,
-                message = "Base de datos actualizada exitosamente",
-                totalRows = validationResult.TotalRows,
-                database
-            });
+            return Ok(database);
         }
         catch (Exception ex)
         {
