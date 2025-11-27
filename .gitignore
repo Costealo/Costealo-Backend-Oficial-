@@ -26,3 +26,7 @@ Thumbs.db
 
 # AppSettings (optional, often contains secrets)
 # appsettings.Development.json
+
+# Publish artifacts
+publish/
+*.zip
