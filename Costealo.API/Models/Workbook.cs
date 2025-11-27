@@ -31,7 +31,7 @@ public class Workbook
     public decimal OperationalCostPercentage { get; set; } = 0.20m; // Default 20%
 
     [Column(TypeName = "decimal(18,2)")]
-    public decimal OperationalCostFixed { get; set; }
+    public decimal OperationalCostFixed { get; set; } = 0; // NOT USED - Reserved for future use
 
     public int UserId { get; set; }
     
