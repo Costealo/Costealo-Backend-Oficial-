@@ -91,14 +91,12 @@ public class WorkbooksController : ControllerBase
         {
             Name = dto.Name,
             ProductionUnits = dto.ProductionUnits,
-            TaxPercentage = dto.TaxPercentage,
             ProfitMarginPercentage = dto.ProfitMarginPercentage,
             TargetSalePrice = dto.TargetSalePrice,
-            OperationalCostPercentage = dto.OperationalCostPercentage,
-            OperationalCostFixed = dto.OperationalCostFixed,
             UserId = userId,
             CreatedAt = DateTime.UtcNow,
-            Status = EntityStatus.Draft // Default to Draft
+            Status = EntityStatus.Draft
+            // TaxPercentage, OperationalCostPercentage, and OperationalCostFixed use model defaults (0.16, 0, 0)
         };
 
         _context.Workbooks.Add(workbook);
@@ -118,11 +116,9 @@ public class WorkbooksController : ControllerBase
 
         workbook.Name = dto.Name;
         workbook.ProductionUnits = dto.ProductionUnits;
-        workbook.TaxPercentage = dto.TaxPercentage;
         workbook.ProfitMarginPercentage = dto.ProfitMarginPercentage;
         workbook.TargetSalePrice = dto.TargetSalePrice;
-        workbook.OperationalCostPercentage = dto.OperationalCostPercentage;
-        workbook.OperationalCostFixed = dto.OperationalCostFixed;
+        // TaxPercentage, OperationalCostPercentage, and OperationalCostFixed are not user-editable
 
         await _context.SaveChangesAsync();
 
