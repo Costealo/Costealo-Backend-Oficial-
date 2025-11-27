@@ -28,7 +28,7 @@ public class Workbook
 
     // Overhead
     [Column(TypeName = "decimal(18,4)")]
-    public decimal OperationalCostPercentage { get; set; }
+    public decimal OperationalCostPercentage { get; set; } = 0.20m; // Default 20%
 
     [Column(TypeName = "decimal(18,2)")]
     public decimal OperationalCostFixed { get; set; }
