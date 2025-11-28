@@ -1,4 +1,5 @@
 using Costealo.API.Data;
+using Costealo.API.DTOs;
 using Costealo.API.Models;
 using Costealo.API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -48,8 +49,26 @@ public class PriceDatabaseController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<PriceDatabase>> CreateDatabase(PriceDatabase database)
+    public async Task<ActionResult<PriceDatabase>> CreateDatabase(CreatePriceDatabaseDto dto)
     {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        // Check subscription limits
+        if (!await _subscriptionService.CanCreateDatabase(userId))
+        {
+            var subscription = await _subscriptionService.GetUserSubscription(userId);
+            return BadRequest($"Database limit reached for your {subscription.PlanType} plan. Upgrade to create more databases.");
+        }
+
+        var database = new PriceDatabase
+        {
+            Name = dto.Name,
+            SourceUrl = dto.SourceUrl,
+            UploadDate = DateTime.UtcNow,
+            ItemCount = 0,
+            UserId = userId
+        };
+
         _context.PriceDatabases.Add(database);
         await _context.SaveChangesAsync();
 
