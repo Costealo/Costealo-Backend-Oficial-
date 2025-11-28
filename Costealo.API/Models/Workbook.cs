@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Costealo.API.Models;
 
@@ -36,6 +37,7 @@ public class Workbook
     public int UserId { get; set; }
     
     [ForeignKey("UserId")]
+    [JsonIgnore] // Prevent exposing user data (email, passwordHash) in responses
     public User User { get; set; } = null!;
 
     public EntityStatus Status { get; set; } = EntityStatus.Draft;
